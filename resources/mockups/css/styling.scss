@@ -1,0 +1,91 @@
+@import 'palette';
+
+$primary: "Green";
+$accent: "Blue";
+
+$light-text: white;
+$text-main: rgba(0,0,0,0.87);
+$text-sub: rgba(0,0,0,0.54);
+$text-dis: rgba(0,0,0,0.26);
+
+$shadow: rgba(0,0,0,0.87);
+
+
+@import 'https://fonts.googleapis.com/css?family=Roboto|Ubuntu:300,400';
+
+* {
+    font-family: 'Ubuntu', sans-serif;
+    font-weight: 300;
+    color: $text-main;}
+
+body {
+    margin: 0;
+    background-color: #FAFAFA; }
+
+.post-date {
+    color: $text-sub;}
+
+.post {
+    background-color: white;
+    box-shadow: -0.1em 0.1em 0.5em $shadow;
+    width: 70%;
+    margin: 0 auto;
+
+    > * { padding: 0.2em; }
+}
+
+.project-name { color: $text-sub; }
+
+header, body > footer {
+    background-color: palette($primary, 500);
+    width: 100%;
+    margin: 0;
+    box-shadow: 0 0.1em 1em $shadow;
+
+    color: $light-text;
+    
+    * {
+	justify-content: center;
+	text-align: center;
+	flex: 1 1;
+	margin: 0;
+	padding: 0.2em;
+
+    	color: inherit;
+	font-weight: 500; }
+}
+
+footer {
+    position: fixed;
+    bottom: 0%;
+}
+
+header > nav {
+    padding: 0;
+    
+    > * { display: flex;}
+    
+    * {
+	padding: 0;
+	flex: 1 1;
+	height: 3em;
+	line-height: 3em;
+	background-color: palette($primary, 600);}
+    
+    ul {
+	list-style: none;
+	
+	li, li * {
+	    transition: background-color 50ms ease; }
+	
+	li > * {
+	    display: inline-block;}
+	
+	li:hover,
+	li:hover * {
+	    background-color: palette($accent, A400); }
+    }
+    
+    .current-page,
+    .current-page * { background-color: palette($primary, 400); }
+}
