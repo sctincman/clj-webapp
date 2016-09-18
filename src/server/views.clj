@@ -71,3 +71,35 @@
       [:tr [:th "id"] [:th "x"] [:th "y"]]
       (for [loc all-locs]
         [:tr [:td (:id loc)] [:td (:x loc)] [:td (:y loc)]])])))
+
+;; Of course, this needs to be changed!
+;;; Leaking hashes is no good, keep for debugging?
+(defn user-list []
+  (let [all-users (db/get-all-users)]
+    (hic-p/html5
+     (gen-page-head "All users")
+     header-links
+     [:h1 "All users"]
+     [:table
+      [:tr [:th "id"] [:th "username"] [:th "hash"] [:th "salt"] [:th "email"] [:th "created"]]
+      (for [user all-users]
+        [:tr [:td (:id user)] [:td (:username user)] [:td (:passwordhash user)] [:td (:salt user)] [:td (:email user)] [:td (:creationdate user)]])])))
+
+(defn user-page [username]
+  (let [user (db/get-user-by-name username)]
+    (hic-p/html5
+     (gen-page-head (str "Userpage for " username))
+     header-links
+     [:h1 (:username user)]
+     [:p "id: " (:id user)]
+     [:p "email: " (:email user)]
+     [:p "Joined: " (:creationdate user)])))
+
+(defn post-page [username postid]
+  (let [post (db/get-post username postid)]
+    (hic-p/html5
+     (gen-page-head (str postid))
+     header-links
+     [:h1 (:project post) ": " (:title post)]
+     [:p "Posted: " (:creationdate post)] ;; conditionally add modification date?
+     [:p (:content post)])))

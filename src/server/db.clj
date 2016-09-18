@@ -27,3 +27,29 @@
                   (j/query db-conn
                            ["select id, x, y from locations"]))]
     results))
+(defn get-all-posts []
+  (let [results (j/with-db-connection [db-conn db-spec]
+                  (j/query db-conn
+                           ["select * from posts"]))]
+    results))
+
+(defn get-all-users []
+  (j/with-db-connection [db-conn db-spec]
+    (j/query db-conn
+             ["select * from users"])))
+
+(defn get-user-by-name [username]
+  (let [results (j/with-db-connection [db-conn db-spec]
+                  (j/query db-conn
+                           ["select * from users where username = ?" username]))]
+    (assert (= (count results) 1))
+    (first results)))
+
+;; AH! SQL injectionable
+;;;; Possibly not, these are PreparedStatements from java.sql: they may properly escape any characters!
+(defn get-post [username postid]
+  (let [results (j/with-db-connection [db-conn db-spec]
+                  (j/query db-conn
+                           ["select * from posts where owner = ? and id = ?" username postid]))]
+    (assert (= (count results) 1))
+    (first results))))
