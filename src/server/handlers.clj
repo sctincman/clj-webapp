@@ -1,8 +1,8 @@
 (ns server.handlers
   (:require [server.views :as views]
             [compojure.core :as cc]
-            [compojure.handler :as handler]
-            [compojure.route :as route]))
+            [compojure.route :as route]
+            [ring.middleware.defaults :refer [wrap-defaults site-defaults]]))
 
 (cc/defroutes app-routes
   (cc/GET "/"
@@ -24,4 +24,4 @@
   (route/not-found "Not Found"))
 
 (def app
-  (handler/site app-routes))
+  (wrap-defaults app-routes site-defaults))
