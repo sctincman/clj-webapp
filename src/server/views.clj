@@ -1,6 +1,7 @@
 (ns server.views
   (:require [server.db :as db]
             [clojure.string :as str]
+            [ring.util.anti-forgery :refer [anti-forgery-field]]
             [hiccup.page :as hic-p]))
 
 (defn gen-page-head
@@ -34,6 +35,7 @@
    header-links
    [:h1 "Add a Location"]
    [:form {:action "/add-location" :method "POST"}
+    (anti-forgery-field)
     [:p "x value: " [:input {:type "text" :name "x"}]]
     [:p "y value: " [:input {:type "text" :name "y"}]]
     [:p [:input {:type "submit" :value "submit location"}]]]))
