@@ -97,6 +97,38 @@
      [:p "email: " (:email user)]
      [:p "Joined: " (:creationdate user)])))
 
+(defn project-list [username]
+  (let [projects (db/get-all-projects username)]
+    (hic-p/html5
+     (gen-page-head (str "Projects for " username))
+     header-links
+     [:h1 "Projects"]
+     [:h2 username]
+     [:ul
+      (for [project projects]
+        [:li [:a {:href (str "/user/" username "/projects/" (:id project))} (:title project)] ": " (:decription project)])])))
+
+(defn post-list [username projectid]
+  (let [posts (db/get-posts username projectid)]
+    (hic-p/html5
+     (gen-page-head (str "Posts for " projectid))
+     header-links
+     [:h1 projectid " : Posts (lookup projectname)"]
+     [:h2 username]
+     [:ul
+      (for [post posts]
+        [:li [:a {:href (str "/user/" username "/posts/" (:id post))} (:title posts)]])])))
+
+(defn project-page [username projectid]
+  (let [project (db/get-project username projectid)]
+    (hic-p/html5
+     (gen-page-head (str "Project page: " (:title project)))
+     header-links
+     [:h1 (:title project)]
+     [:h2 username]
+     [:p "Created: " (:creationdate project)]
+     [:p (:description project)])))
+
 (defn post-page [username postid]
   (let [post (db/get-post username postid)]
     (hic-p/html5

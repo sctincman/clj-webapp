@@ -21,7 +21,7 @@
                                             [:title "char(255) not null"]
                                             [:content "char not null"]
                                             [:creationdate "timestamp not null"]
-                                            [:modificationdate "timestamp not null"]])
+                                            [:modificationdate "timestamp"]])
                        (j/create-table-ddl :projects
                                            [[:id "bigint primary key auto_increment"]
                                             [:owner "char(255) not null"]
