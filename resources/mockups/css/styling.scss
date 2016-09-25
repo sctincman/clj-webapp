@@ -1,7 +1,7 @@
 @import 'palette';
 
-$primary: "Green";
-$accent: "Blue";
+$primary: Indigo;
+$accent: Blue;
 
 $light-text: white;
 $text-main: rgba(0,0,0,0.87);
@@ -36,56 +36,60 @@ body {
 
 .project-name { color: $text-sub; }
 
-header, body > footer {
+.banner {
     background-color: palette($primary, 500);
+    color: $light-text;
+    
     width: 100%;
     margin: 0;
     box-shadow: 0 0.1em 1em $shadow;
-
-    color: $light-text;
     
     * {
 	justify-content: center;
 	text-align: center;
-	flex: 1 1;
-	margin: 0;
+	margin: 0 auto;
 	padding: 0.2em;
 
     	color: inherit;
 	font-weight: 500; }
 }
 
-footer {
+.banner-bottom {
     position: fixed;
     bottom: 0%;
 }
 
-header > nav {
+.banner > nav {
     padding: 0;
-    
-    > * { display: flex;}
+    background-color: palette($primary, 700);
     
     * {
 	padding: 0;
-	flex: 1 1;
-	height: 3em;
-	line-height: 3em;
-	background-color: palette($primary, 600);}
+	font-size: 100%;
+	background-color: palette($primary, 700);}
     
     ul {
 	list-style: none;
+	display: inline-block;
+	padding: 0 2em;
 	
 	li, li * {
-	    transition: background-color 50ms ease; }
-	
-	li > * {
-	    display: inline-block;}
+	    display: inline-block;
+	    padding: 0.5em;
+	    transition-property: background-color,color;
+	    transition-duration: 200ms;
+	    transition-timing-function: ease-in-out;
+	}
 	
 	li:hover,
 	li:hover * {
-	    background-color: palette($accent, A400); }
+	    background-color: palette($accent, A400);
+	    
+	}
     }
+
+    a { text-decoration: none;}
     
     .current-page,
-    .current-page * { background-color: palette($primary, 400); }
+    .current-page * { background-color: palette($primary, 500); }
 }
