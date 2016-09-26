@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=1024, user-scalable=no">
+
+  <title>Plog Posts</title>
+
+  <link rel="stylesheet" href="css/styling.css">
+
+</head>
+<body>
+
+  <header class="banner banner-top">
+    <h1>Tincman</h1>
+      <nav>
+	<ul>
+	  <li><a href="posts.html">All Posts</a></li>
+	  <li><a href="projects.html">Projects</a></li>
+	  <li><a href="about.html">About</a></li>
+	</ul>
+	<ul>
+	  <li class="current-page"><a href="new-post.html">New Post</a></li>
+	  <li><a href="new-project.html">New Project</a></li>
+	  <li><a href="profile.html">Profile</a></li>
+	</ul>
+      </nav>
+  </header>
+
+  <section class="content post">
+    <h1>New Post</h1>
+    <form action="new-post.html" method="POST">
+      <label for="project">Project</label>
+      <input id="project" list="projects" name="project" required />
+      <datalist id="projects">
+	<option value="Project 1" />
+	<option value="Project 2" />
+	<option value="Project 3" />
+      </datalist>
+      <label for="title-input">Title</label>
+      <input id="title-input" name="title" type="text" placeholder="Title" required maxlength="250" />
+      <textarea id="content" name="content" placeholder="Post body" required ></textarea>
+      <input id="submit" type="submit" value="Create" />
+    </form>
+  </section>
+
+  <footer class="banner banner-bottom">
+    This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
+  </footer>
+
+</body>

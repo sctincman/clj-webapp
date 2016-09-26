@@ -36,6 +36,17 @@ body {
 
 .project-name { color: $text-sub; }
 
+form {
+    > * {
+    display: block;
+    margin: 0.5em;
+    }
+
+    textarea { width: 90%; height: 20em; }
+}
+
+datalist { display: none;}
+
 .banner {
     background-color: palette($primary, 500);
     color: $light-text;
