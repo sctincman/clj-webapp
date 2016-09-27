@@ -128,3 +128,61 @@
      [:p "Posted: " (:creationdate post)] ;; conditionally add modification date?
      [:p (:content post)]
      footer-bar)))
+
+
+(defn new-project-page [user]
+  (hic-p/html5
+   (gen-page-head "New Project")
+   (header-bar "New Project")
+   [:section.content.post
+    [:h1 "New Project"]
+    [:form {:action "/new-project" :method "POST"}
+     (anti-forgery-field)
+     [:label {:for "title"} "Title"]
+     [:input {:id "title" :name "title" :type "text" :placeholder "Title" :maxlength "250"}]
+     [:label {:for "desc"} "Description"]
+     [:input {:id "desc" :name "description" :type "text" :placeholder "Description"}]
+     [:input {:id "submit" :type "submit" :value "Create"}]]]
+   footer-bar))
+
+(defn new-project-results-page
+  [user title description]
+  (let [id (db/create-project user title description)]
+    (hic-p/html5
+     (gen-page-head "Created Project")
+     (header-bar "Project Created")
+     [:h1 "Project created"]
+     [:p "Project created successfully: "
+      [:a {:href (str "/user/" user "/projects/" id)} "view"]]
+     footer-bar)))
+
+(defn new-post-page [user]
+  (let [projects (db/get-all-projects user)]
+    (hic-p/html5
+     (gen-page-head "New Post")
+     (header-bar "New Post")
+     [:section.content.post
+      [:h1 "New Post"]
+      [:form {:action "/new-post" :method "POST"}
+       (anti-forgery-field)
+       [:label {:for "project"} "Project"]
+       [:input#project {:list "projects" :name "project"}]
+       [:datalist#projects
+        (map (fn [project] [:option {:value (:title project)}]) projects)]
+       [:label {:for "title"} "Title"]
+       [:input {:id "title" :name "title" :type "text" :placeholder "Title" :maxlength "250"}]
+       [:label {:for "body"} "Content"]
+       [:textarea {:id "content" :name "content" :placeholder "Type content here"}]
+       [:input {:id "submit" :type "submit" :value "Create"}]]]
+     footer-bar)))
+
+(defn new-post-results-page
+  [user project title content]
+  (let [id (db/create-post user project title content)]
+    (hic-p/html5
+     (gen-page-head "Added Post")
+     (header-bar "Posted")
+     [:h1 "Posted"]
+     [:p "Post created successfully: "
+      [:a {:href (str "/user/" user "/posts/" id)} "view"]]
+     footer-bar)))

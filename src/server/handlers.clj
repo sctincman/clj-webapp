@@ -22,6 +22,16 @@
                    (views/post-list username pid))
            (cc/GET "/posts/:postid" [postid]
                    (views/post-page username postid)))
+
+  (cc/GET "/new-project" []
+          (views/new-project-page "root"))
+  (cc/POST "/new-project" {{title :title description :description} :params}
+           (views/new-project-results-page "root" title description))
+  (cc/GET "/new-post" []
+          (views/new-post-page "root"))
+  (cc/POST "/new-post" {{project :project title :title content :content} :params}
+           (views/new-post-results-page "root" project title content))
+
   (route/resources "/")
   (route/not-found "Not Found"))
 
