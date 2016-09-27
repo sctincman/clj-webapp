@@ -1,0 +1,106 @@
+@import 'palette';
+
+$primary: Indigo;
+$accent: Blue;
+
+$light-text: white;
+$text-main: rgba(0,0,0,0.87);
+$text-sub: rgba(0,0,0,0.54);
+$text-dis: rgba(0,0,0,0.26);
+
+$shadow: rgba(0,0,0,0.87);
+
+
+@import 'https://fonts.googleapis.com/css?family=Roboto|Ubuntu:300,400';
+
+* {
+    font-family: 'Ubuntu', sans-serif;
+    font-weight: 300;
+    color: $text-main;}
+
+body {
+    margin: 0;
+    background-color: #FAFAFA; }
+
+.post-date {
+    color: $text-sub;}
+
+.post {
+    background-color: white;
+    box-shadow: -0.1em 0.1em 0.5em $shadow;
+    width: 70%;
+    margin: 0 auto;
+
+    > * { padding: 0.2em; }
+}
+
+.project-name { color: $text-sub; }
+
+form {
+    > * {
+    display: block;
+    margin: 0.5em;
+    }
+
+    textarea { width: 90%; height: 20em; }
+}
+
+datalist { display: none;}
+
+.banner {
+    background-color: palette($primary, 500);
+    color: $light-text;
+    
+    width: 100%;
+    margin: 0;
+    box-shadow: 0 0.1em 1em $shadow;
+    
+    * {
+	justify-content: center;
+	text-align: center;
+	margin: 0 auto;
+	padding: 0.2em;
+
+    	color: inherit;
+	font-weight: 500; }
+}
+
+.banner-bottom {
+    position: fixed;
+    bottom: 0%;
+}
+
+.banner > nav {
+    padding: 0;
+    background-color: palette($primary, 700);
+    
+    * {
+	padding: 0;
+	font-size: 100%;
+	background-color: palette($primary, 700);}
+    
+    ul {
+	list-style: none;
+	display: inline-block;
+	padding: 0 2em;
+	
+	li, li * {
+	    display: inline-block;
+	    padding: 0.5em;
+	    transition-property: background-color,color;
+	    transition-duration: 200ms;
+	    transition-timing-function: ease-in-out;
+	}
+	
+	li:hover,
+	li:hover * {
+	    background-color: palette($accent, A400);
+	    
+	}
+    }
+
+    a { text-decoration: none;}
+    
+    .current-page,
+    .current-page * { background-color: palette($primary, 500); }
+}
