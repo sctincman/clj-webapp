@@ -46,14 +46,6 @@
     (assert (= (count results) 1))
     (first results)))
 
-(defn add-project [owner title description]
-  (let [results (j/with-db-connection [db-conn db-spec]
-                  (j/insert! db-conn
-                             :projects
-                             {:owner owner :title title :description description :creationdate "2016-09-18 22:53:00"}))]
-    (assert (= (count results) 1))
-    (first (vals (first results)))))
-
 (defn get-posts
   "Returns all posts owned by the passed username, under a specific project (specified by projectid)."
   [owner projectid]

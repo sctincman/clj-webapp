@@ -11,16 +11,6 @@
    [:title (str "Plog: " title)]
    (hic-p/include-css "/css/styling.css")])
 
-(def header-links
-  [:div#header-links
-   "[ "
-   [:a {:href "/"} "Home"]
-   " | "
-   [:a {:href "/add-location"} "Add a Location"]
-   " | "
-   [:a {:href "/all-locations"} "View All Locations"]
-   " ]"])
-
 (defn header-bar
   "Generates the navigation header common to the application. The passed title is displayed as the banner text. Returns a hiccup style vector."
   [title]
