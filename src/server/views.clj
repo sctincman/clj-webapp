@@ -5,6 +5,7 @@
             [hiccup.page :as hic-p]))
 
 (defn gen-page-head
+  "Generates common headers given a page-title, returned as a hiccup style vector."
   [title]
   [:head
    [:title (str "Plog: " title)]
@@ -20,7 +21,9 @@
    [:a {:href "/all-locations"} "View All Locations"]
    " ]"])
 
-(defn header-bar [title]
+(defn header-bar
+  "Generates the navigation header common to the application. The passed title is displayed as the banner text. Returns a hiccup style vector."
+  [title]
   [:div#header-bar
    [:header.banner.banner-top
     [:h1 title]
@@ -36,6 +39,7 @@
       [:li [:a {:href "/profile"} "Profile"]]]]]])
 
 (def footer-bar
+  "Generates the footer common to the application. Returns a hiccup style vector."
   [:div#footer-bar
    [:footer.banner.banner-bottom
     "This work licensed under a "
@@ -43,18 +47,21 @@
      "Creative Commons Attribution 4.0 International License"]]])
 
 (defn home-page
+  "View for the home page. Returns hiccup formatted HTML5."
   []
   (hic-p/html5
    (gen-page-head "Home")
    (header-bar "Home")
    [:h1 "Home"]
-   [:p "Webapp to store and display some 2D (x,y) locations."]
+   [:p "Webapp to log posts related to specified projects."]
    footer-bar))
 
 
 ;; Of course, this needs to be changed!
 ;;; Leaking hashes is no good, keep for debugging?
-(defn user-list []
+(defn user-list
+  "View for a list of all users. Returns hiccup formatted HTML5."
+  []
   (let [all-users (db/get-all-users)]
     (hic-p/html5
      (gen-page-head "All users")
@@ -66,7 +73,9 @@
         [:tr [:td (:id user)] [:td [:a {:href (str "/user/" (:username user))} (:username user)]] [:td (:passwordhash user)] [:td (:salt user)] [:td (:email user)] [:td (:creationdate user)]])]
      footer-bar)))
 
-(defn user-page [username]
+(defn user-page
+  "View for a single user, specified by username. Returns hiccup formatted HTML5."
+  [username]
   (let [user (db/get-user-by-name username)
         projects (db/get-all-projects username)]
     (hic-p/html5
@@ -81,7 +90,9 @@
            projects)]
      footer-bar)))
 
-(defn project-list [username]
+(defn project-list
+  "View for a list of all projects owned by a specified user (passed as username). Returns hiccup formatted HTML5."
+  [username]
   (let [projects (db/get-all-projects username)]
     (hic-p/html5
      (gen-page-head (str "Projects for " username))
@@ -93,7 +104,9 @@
         [:li [:a {:href (str "/user/" username "/projects/" (:id project))} (:title project)] ": " (:decription project)])]
      footer-bar)))
 
-(defn post-list [username projectid]
+(defn post-list
+  "View for a list of all posts owned by a specified user (passed as username), and under a certain project (specified as the projectid). Returns hiccup formatted HTML5."
+  [username projectid]
   (let [posts (db/get-posts username projectid)]
     (hic-p/html5
      (gen-page-head (str "Posts for " projectid))
@@ -105,7 +118,9 @@
         [:li [:a {:href (str "/user/" username "/posts/" (:id post))} (:title post)]])]
      footer-bar)))
 
-(defn project-page [username projectid]
+(defn project-page
+  "View for specific project (passed a projectid), owned by a specified user (passed as username). Returns hiccup formatted HTML5."
+  [username projectid]
   (let [project (db/get-project username projectid)
         posts (db/get-posts username projectid)]
     (hic-p/html5
@@ -119,7 +134,9 @@
       (map (fn [post] [:li [:a {:href (str "/user/" username "/posts/" (:id post))} (:title post)]]) posts)]
      footer-bar)))
 
-(defn post-page [username postid]
+(defn post-page
+  "View for specific post (passed a postid), owned by a specified user (passed as username). Returns hiccup formatted HTML5."
+  [username postid]
   (let [post (db/get-post username postid)]
     (hic-p/html5
      (gen-page-head (str postid))
@@ -130,7 +147,9 @@
      footer-bar)))
 
 
-(defn new-project-page [user]
+(defn new-project-page
+  "View for creating a new project via forms and POST, owned by a specified user (passed as username). Returns hiccup formatted HTML5."
+  [user]
   (hic-p/html5
    (gen-page-head "New Project")
    (header-bar "New Project")
@@ -146,6 +165,7 @@
    footer-bar))
 
 (defn new-project-results-page
+  "View for a new project: creates a new project, owned by a specified user (passed as username), with the passed title and description. Returns hiccup formatted HTML5."
   [user title description]
   (let [id (db/create-project user title description)]
     (hic-p/html5
@@ -156,7 +176,9 @@
       [:a {:href (str "/user/" user "/projects/" id)} "view"]]
      footer-bar)))
 
-(defn new-post-page [user]
+(defn new-post-page
+  "View for creating a new post via forms and POST, owned by a specified user (passed as username). Returns hiccup formatted HTML5."
+  [user]
   (let [projects (db/get-all-projects user)]
     (hic-p/html5
      (gen-page-head "New Post")
@@ -177,6 +199,7 @@
      footer-bar)))
 
 (defn new-post-results-page
+  "View for a new posts: creates a new post, owned by a specified user and project (passed as username and project title), with the passed title and content. Returns hiccup formatted HTML5."
   [user project title content]
   (let [id (db/create-post user project title content)]
     (hic-p/html5

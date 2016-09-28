@@ -4,7 +4,9 @@
   {:dbtype "h2"
    :dbname "./db/server"})
 
-(defn init-db [db-spec]
+(defn init-db
+  "Initialize a database (specifided by a jdbc spec map), creating the users, projects, and posts tables."
+  [db-spec]
   (j/with-db-connection [db-conn db-spec]
     (j/db-do-commands db-conn
                       [(j/create-table-ddl :users
